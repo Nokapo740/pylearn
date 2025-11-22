@@ -15,15 +15,17 @@ export async function GET(request: NextRequest) {
       )
     }
 
+    const userId = (session.user as any).id as string
+
     const progress = await prisma.lessonProgress.findMany({
       where: {
-        userId: session.user.id,
+        userId,
       },
     })
 
     const exercises = await prisma.completedExercise.findMany({
       where: {
-        userId: session.user.id,
+        userId,
       },
     })
 
@@ -52,6 +54,8 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    const userId = (session.user as any).id as string
+
     const { lessonId, topicId, completed } = await request.json()
 
     if (lessonId === undefined || !topicId) {
@@ -65,7 +69,7 @@ export async function POST(request: NextRequest) {
     const existing = await prisma.lessonProgress.findUnique({
       where: {
         userId_lessonId_topicId: {
-          userId: session.user.id,
+          userId,
           lessonId,
           topicId,
         },
@@ -85,7 +89,7 @@ export async function POST(request: NextRequest) {
       // Создаем новый
       await prisma.lessonProgress.create({
         data: {
-          userId: session.user.id,
+          userId,
           lessonId,
           topicId,
           completed,

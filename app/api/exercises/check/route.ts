@@ -19,6 +19,15 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    const userId = (session.user as any).id as string
+    
+    if (!userId) {
+      return NextResponse.json(
+        { error: 'Ошибка идентификации пользователя' },
+        { status: 401 }
+      )
+    }
+
     const { exerciseId, code, tests } = await request.json()
 
     if (!exerciseId || !code || !tests) {
@@ -98,7 +107,7 @@ export async function POST(request: NextRequest) {
     const existing = await prisma.completedExercise.findUnique({
       where: {
         userId_exerciseId: {
-          userId: session.user.id,
+          userId,
           exerciseId,
         },
       },
@@ -118,7 +127,7 @@ export async function POST(request: NextRequest) {
     } else {
       await prisma.completedExercise.create({
         data: {
-          userId: session.user.id,
+          userId,
           exerciseId,
           code,
           passed: allPassed,
