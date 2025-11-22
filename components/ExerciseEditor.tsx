@@ -20,7 +20,7 @@ interface TestCase {
 }
 
 interface ExerciseEditorProps {
-  exerciseId: number
+  exerciseId: string | number
   initialCode?: string
   tests: TestCase[]
   onSuccess?: () => void

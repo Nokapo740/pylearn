@@ -98,7 +98,7 @@ model LessonProgress {
 model CompletedExercise {
   id          String   @id @default(cuid())
   userId      String
-  exerciseId  Int
+  exerciseId  String
   code        String   // Код решения
   passed      Boolean  @default(false)
   attempts    Int      @default(1)
