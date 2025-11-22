@@ -185,7 +185,7 @@ export default function SettingsPage() {
                     <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                     <input
                       type="text"
-                      value={session.user?.emailVerified ? new Date(session.user.emailVerified).toLocaleDateString('ru-RU') : 'Не указано'}
+                      value="Не указано"
                       disabled
                       className="w-full bg-white/5 border border-white/10 rounded-xl pl-10 pr-4 py-3 opacity-50 cursor-not-allowed"
                     />
